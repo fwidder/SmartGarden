@@ -1,3 +1,5 @@
+arduino:
+  port: /dev/ttyACM1
 logging:
   file:
     name: smartgarden.log
@@ -10,5 +12,18 @@ logging:
 server:
   port: 8081
 watering:
-  cron: '30 0/2 * * * *'
+  cron: '30 0/30 * * * *'
   period: 5
+  sensor:
+    sensor1:
+      port: 14
+      low: 500
+    sensor2:
+      port: 14
+      low: 500
+    sensor3:
+      port: 14
+      low: 500
+    sensor4:
+      port: 14
+      low: 500

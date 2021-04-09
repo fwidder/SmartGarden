@@ -3,11 +3,67 @@
     {
       "name": "watering.cron",
       "type": "java.lang.String",
-      "description": "Cron delay for check if Plants need new Water."
+      "description": "Cron delay for check if Plants need new Water.",
+      "defaultValue": "30 0/15 * * * *"
     },
     {
       "name": "watering.period",
+      "type": "java.lang.Integer",
+      "description": "Time the Pump stay 'on'.",
+      "defaultValue": "30"
+    },
+    {
+      "name": "arduino.port",
       "type": "java.lang.String",
-      "description": "Time the Pump stay 'on'."
+      "description": "Linux Device Port of the Arduino.",
+      "defaultValue": "/dev/tty???"
+    },
+    {
+      "name": "watering.sensor.sensor1.port",
+      "type": "java.lang.Integer",
+      "description": "Firmata4j Pin Number for Sensor 1.",
+      "defaultValue": "14"
+    },
+    {
+      "name": "watering.sensor.sensor1.low",
+      "type": "java.lang.Integer",
+      "description": "Minimal value for Sensor 1 with no watering.",
+      "defaultValue": "500"
+    },
+    {
+      "name": "watering.sensor.sensor2.port",
+      "type": "java.lang.Integer",
+      "description": "Firmata4j Pin Number for Sensor 2.",
+      "defaultValue": "15"
+    },
+    {
+      "name": "watering.sensor.sensor2.low",
+      "type": "java.lang.Integer",
+      "description": "Minimal value for Sensor 2 with no watering.",
+      "defaultValue": "500"
+    },
+    {
+      "name": "watering.sensor.sensor3.port",
+      "type": "java.lang.Integer",
+      "description": "Firmata4j Pin Number for Sensor 3.",
+      "defaultValue": "16"
+    },
+    {
+      "name": "watering.sensor.sensor3.low",
+      "type": "java.lang.Integer",
+      "description": "Minimal value for Sensor 3 with no watering.",
+      "defaultValue": "500"
+    },
+    {
+      "name": "watering.sensor.sensor4.port",
+      "type": "java.lang.Integer",
+      "description": "Firmata4j Pin Number for Sensor 4.",
+      "defaultValue": "17"
+    },
+    {
+      "name": "watering.sensor.sensor4.low",
+      "type": "java.lang.Integer",
+      "description": "Minimal value for Sensor 4 with no watering.",
+      "defaultValue": "500"
     }
   ] }
