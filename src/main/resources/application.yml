@@ -1,0 +1,14 @@
+logging:
+  file:
+    name: smartgarden.log
+    path: /opt/smartgarden/
+  logback:
+    rollingpolicy:
+      clean-history-on-start: true
+      max-history: 7
+      max-file-size: 10MB
+server:
+  port: 8081
+watering:
+  cron: '30 0/2 * * * *'
+  period: 5

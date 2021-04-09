@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "watering.cron",
+      "type": "java.lang.String",
+      "description": "Cron delay for check if Plants need new Water."
+    },
+    {
+      "name": "watering.period",
+      "type": "java.lang.String",
+      "description": "Time the Pump stay 'on'."
+    }
+  ] }
