@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/header :: header"> </head>
+<body>
+
+<div class="container">
+    <h1>Smart Garden Control Center</h1>
+    <div lang="en" th:include="fragments/sensor"> </div>
+    <div lang="en" th:include="fragments/pump"> </div>
+</div>
+
+<div lang="en" th:replace="fragments/footer :: footer"> </div>
+</body>
+</html>

@@ -11,6 +11,6 @@ import lombok.ToString;
 public enum GPIOInputPin {
     ;
 
-    private String name;
-    private Pin pin;
+    private final String name;
+    private final Pin pin;
 }

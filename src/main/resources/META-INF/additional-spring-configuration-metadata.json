@@ -31,6 +31,11 @@
       "defaultValue": "500"
     },
     {
+      "name": "watering.sensor.sensor1.high",
+      "type": "java.lang.Integer",
+      "description": "Maximum value for Sensor 1 with watering allowed."
+    },
+    {
       "name": "watering.sensor.sensor2.port",
       "type": "java.lang.Integer",
       "description": "Firmata4j Pin Number for Sensor 2.",
@@ -41,6 +46,11 @@
       "type": "java.lang.Integer",
       "description": "Minimal value for Sensor 2 with no watering.",
       "defaultValue": "500"
+    },
+    {
+      "name": "watering.sensor.sensor2.high",
+      "type": "java.lang.Integer",
+      "description": "Maximum value for Sensor 2 with watering allowed."
     },
     {
       "name": "watering.sensor.sensor3.port",
@@ -55,6 +65,11 @@
       "defaultValue": "500"
     },
     {
+      "name": "watering.sensor.sensor3.high",
+      "type": "java.lang.Integer",
+      "description": "Maximum value for Sensor 3 with watering allowed."
+    },
+    {
       "name": "watering.sensor.sensor4.port",
       "type": "java.lang.Integer",
       "description": "Firmata4j Pin Number for Sensor 4.",
@@ -65,5 +80,11 @@
       "type": "java.lang.Integer",
       "description": "Minimal value for Sensor 4 with no watering.",
       "defaultValue": "500"
+    },
+    {
+      "name": "watering.sensor.sensor4.high",
+      "type": "java.lang.Integer",
+      "description": "Maximum value for Sensor 4 with watering allowed."
     }
-  ] }
+  ]
+}

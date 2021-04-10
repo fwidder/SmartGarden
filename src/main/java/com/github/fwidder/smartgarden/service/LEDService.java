@@ -22,28 +22,28 @@ public class LEDService {
         setAll(false);
     }
 
-    public void setAll(boolean state){
+    public void setAll(boolean state) {
         setGreen(state);
         setYellow(state);
         setRed(state);
     }
 
-    public void setGreen(boolean state){
-        if(state)
+    public void setGreen(boolean state) {
+        if (state)
             gpioService.enable(GPIOOutputPin.LED_GREEN);
         else
             gpioService.disable(GPIOOutputPin.LED_GREEN);
     }
 
-    public void setYellow(boolean state){
-        if(state)
+    public void setYellow(boolean state) {
+        if (state)
             gpioService.enable(GPIOOutputPin.LED_YELLOW);
         else
             gpioService.disable(GPIOOutputPin.LED_YELLOW);
     }
 
-    public void setRed(boolean state){
-        if(state)
+    public void setRed(boolean state) {
+        if (state)
             gpioService.enable(GPIOOutputPin.LED_RED);
         else
             gpioService.disable(GPIOOutputPin.LED_RED);

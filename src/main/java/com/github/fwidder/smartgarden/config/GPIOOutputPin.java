@@ -17,9 +17,9 @@ public enum GPIOOutputPin {
     PUMP_4("Pump 4", RaspiPin.GPIO_25, PinState.HIGH),
     LED_RED("Led red", RaspiPin.GPIO_29, PinState.LOW),
     LED_YELLOW("Led yellow", RaspiPin.GPIO_28, PinState.LOW),
-    LED_GREEN("Pump Led green", RaspiPin.GPIO_27, PinState.LOW);
+    LED_GREEN("Led green", RaspiPin.GPIO_27, PinState.LOW);
 
-    private String name;
-    private Pin pin;
-    private PinState state;
+    private final String name;
+    private final Pin pin;
+    private final PinState state;
 }

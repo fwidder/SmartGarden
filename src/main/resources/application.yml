@@ -1,5 +1,5 @@
 arduino:
-  port: /dev/ttyACM1
+  port: /dev/ttyACM0
 logging:
   file:
     name: smartgarden.log
@@ -18,12 +18,16 @@ watering:
     sensor1:
       port: 14
       low: 500
+      high: 700
     sensor2:
-      port: 14
+      port: 15
       low: 500
+      high: 700
     sensor3:
-      port: 14
+      port: 16
       low: 500
+      high: 700
     sensor4:
-      port: 14
+      port: 17
       low: 500
+      high: 700

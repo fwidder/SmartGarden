@@ -25,13 +25,13 @@ public class GPIOService {
         initializePins();
     }
 
-    public void initializePins(){
+    public void initializePins() {
         log.atInfo().log("Start PIN Init.");
-        for(GPIOInputPin pin: GPIOInputPin.values()){
+        for (GPIOInputPin pin : GPIOInputPin.values()) {
             log.atInfo().log("Init Input Pin \t{}.", pin.toString());
             GpioPinDigitalInput tmp = gpioController.provisionDigitalInputPin(pin.getPin(), pin.getName());
         }
-        for(GPIOOutputPin pin: GPIOOutputPin.values()){
+        for (GPIOOutputPin pin : GPIOOutputPin.values()) {
             log.atInfo().log("Init Output Pin \t{}.", pin.toString());
             GpioPinDigitalOutput tmp = gpioController.provisionDigitalOutputPin(pin.getPin(), pin.getName(), pin.getState());
             tmp.setShutdownOptions(true, pin.getState(), PinPullResistance.OFF);
@@ -45,13 +45,18 @@ public class GPIOService {
         gpioController.shutdown();
     }
 
-    public void enable(GPIOOutputPin outputPin){
+    public void enable(GPIOOutputPin outputPin) {
         log.atDebug().log("Enable Pin {}.", outputPin.toString());
         outputMap.get(outputPin).high();
     }
 
-    public void disable(GPIOOutputPin outputPin){
+    public void disable(GPIOOutputPin outputPin) {
         log.atDebug().log("Disable Pin {}.", outputPin.toString());
         outputMap.get(outputPin).low();
+    }
+
+    public boolean getStatus(GPIOOutputPin outputPin) {
+        log.atDebug().log("Pin {} has Status {}.", outputPin.toString(), outputMap.get(outputPin).getState());
+        return outputMap.get(outputPin).getState().isHigh();
     }
 }

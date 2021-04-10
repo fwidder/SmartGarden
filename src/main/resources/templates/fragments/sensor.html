@@ -1,0 +1,24 @@
+<div>
+<h2>Sensoren</h2>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Sensor</th>
+        <th scope="col">Aktuell</th>
+        <th scope="col">Letzte Messung</th>
+        <th scope="col">Minimum</th>
+        <th scope="col">Maximum</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sensor : ${sensorData}">
+        <td th:text="${sensor.getName()}">NAME</td>
+        <td th:text="${sensor.getCurrent()}">CURRENT</td>
+        <td th:text="${sensor.getLastMeasurement()}">LASTMeasurement</td>
+        <td th:text="${sensor.getMin()}">MIN</td>
+        <td th:text="${sensor.getMax()}">MAX</td>
+    </tr>
+    </tbody>
+</table>
+<p class="btn btn-primary" href="/control/refresh">Refresh</p>
+</div>
