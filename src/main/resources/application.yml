@@ -35,20 +35,3 @@ spring:
 watering:
   cron: "30 0/30 * * * *"
   period: 5
-  sensor:
-    sensor1:
-      high: 650
-      low: 300
-      port: 14
-    sensor2:
-      high: 650
-      low: 300
-      port: 15
-    sensor3:
-      high: 650
-      low: 300
-      port: 16
-    sensor4:
-      high: 650
-      low: 300
-      port: 17

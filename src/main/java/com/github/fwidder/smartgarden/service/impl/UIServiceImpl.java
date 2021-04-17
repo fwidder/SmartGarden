@@ -8,6 +8,7 @@ import com.github.fwidder.smartgarden.service.interfaces.SensorServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.TimerServiceInterface;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,44 +25,17 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
     }
 
     @Override
-    public void refreshSensor(){
-        sensorService.checkSensor1();
-        sensorService.checkSensor2();
-        sensorService.checkSensor3();
-        sensorService.checkSensor4();
+    public void refreshSensor() throws IOException {
+        sensorService.refreshSensor();
     }
 
     @Override
     public List<PumpData> getPumpData() {
         List<PumpData> pumpData = new ArrayList<>();
-        pumpData.add(
-                PumpData.builder() //
-                        .name("Pumpe #1")
-                        .status(pumpService.getPump1Status())
-                        .lastChange(pumpService.getPump1LastChange())
-                        .build() //
-        );
-        pumpData.add(
-                PumpData.builder() //
-                        .name("Pumpe #2")
-                        .status(pumpService.getPump2Status())
-                        .lastChange(pumpService.getPump2LastChange())
-                        .build() //
-        );
-        pumpData.add(
-                PumpData.builder() //
-                        .name("Pumpe #3")
-                        .status(pumpService.getPump3Status())
-                        .lastChange(pumpService.getPump3LastChange())
-                        .build() //
-        );
-        pumpData.add(
-                PumpData.builder() //
-                        .name("Pumpe #4")
-                        .status(pumpService.getPump4Status())
-                        .lastChange(pumpService.getPump4LastChange())
-                        .build() //
-        );
+        pumpService.getPumpStatus().forEach((pin, pump) -> {
+            pumpData.add(pump);
+        });
+        pumpData.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
         return pumpData;
     }
 
@@ -72,46 +46,11 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
     @Override
     public List<SensorData> getSensorData() {
         List<SensorData> sensorData = new ArrayList<>();
-        sensorData.add( //
-                SensorData.builder() //
-                        .name("Sensor #1") //
-                        .currentAbsolute(sensorService.getSensor1Last()) //
-                        .currentPercent(calcSensorPercent(sensorService.getSensor1Min(), sensorService.getSensor1Max() ,sensorService.getSensor1Last())) //
-                        .lastMeasurement(sensorService.getSensor1LastMeasurement()) //
-                        .max(sensorService.getSensor1Max()) //
-                        .min(sensorService.getSensor1Min()) //
-                        .build() //
-        );
-        sensorData.add( //
-                SensorData.builder() //
-                        .name("Sensor #2")
-                        .currentAbsolute(sensorService.getSensor2Last()) //
-                        .currentPercent(calcSensorPercent(sensorService.getSensor2Min(), sensorService.getSensor2Max() ,sensorService.getSensor2Last())) //
-                        .lastMeasurement(sensorService.getSensor2LastMeasurement()) //
-                        .max(sensorService.getSensor2Max()) //
-                        .min(sensorService.getSensor2Min()) //
-                        .build() //
-        );
-        sensorData.add( //
-                SensorData.builder() //
-                        .name("Sensor #3") //
-                        .currentAbsolute(sensorService.getSensor3Last()) //
-                        .currentPercent(calcSensorPercent(sensorService.getSensor3Min(), sensorService.getSensor3Max() ,sensorService.getSensor3Last())) //
-                        .lastMeasurement(sensorService.getSensor3LastMeasurement()) //
-                        .max(sensorService.getSensor3Max()) //
-                        .min(sensorService.getSensor3Min()) //
-                        .build() //
-        );
-        sensorData.add( //
-                SensorData.builder() //
-                        .name("Sensor #4") //
-                        .currentAbsolute(sensorService.getSensor4Last()) //
-                        .currentPercent(calcSensorPercent(sensorService.getSensor4Min(), sensorService.getSensor4Max() ,sensorService.getSensor4Last())) //
-                        .lastMeasurement(sensorService.getSensor4LastMeasurement()) //
-                        .max(sensorService.getSensor4Max()) //
-                        .min(sensorService.getSensor4Min()) //
-                        .build() //
-        );
+        sensorService.getSensorDataMap().forEach((inputPin, sensor) -> {
+            sensorData.add(sensor.toBuilder().currentPercent(calcSensorPercent(sensor.getMin(), sensor.getMax(), sensor.getCurrentAbsolute()))
+                    .toLow((long) (calcSensorPercent(sensor.getMin(), sensor.getMax(), sensor.getToLow()) * 100L)).build() );
+        });
+        sensorData.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
         return sensorData;
     }
 }

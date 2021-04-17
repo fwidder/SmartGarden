@@ -1,8 +1,8 @@
 package com.github.fwidder.smartgarden.service.mock;
 
-import com.github.fwidder.smartgarden.config.GPIOInputPin;
-import com.github.fwidder.smartgarden.config.GPIOOutputPin;
-import com.pi4j.io.gpio.*;
+import com.github.fwidder.smartgarden.config.GPIOLedOutputPin;
+import com.github.fwidder.smartgarden.config.GPIOPumpOutputPin;
+import com.github.fwidder.smartgarden.service.interfaces.GPIOServiceInterface;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -16,15 +16,15 @@ import java.util.Map;
 @ConditionalOnProperty(
         value="application.mock",
         havingValue = "true")
-public class GPIOServiceMock implements com.github.fwidder.smartgarden.service.interfaces.GPIOServiceInterface {
+public class GPIOServiceMock implements GPIOServiceInterface {
 
-    private final Map<GPIOOutputPin, Boolean> outputMap;
-    private final Map<GPIOInputPin, Boolean> inputMap;
+    private final Map<GPIOPumpOutputPin, Boolean> pumpMap;
+    private final Map<GPIOLedOutputPin, Boolean> ledMap;
 
     public GPIOServiceMock() {
         log.atInfo().log("Using GPIOServiceMock");
-        outputMap = new HashMap<>();
-        inputMap = new HashMap<>();
+        pumpMap = new HashMap<>();
+        ledMap = new HashMap<>();
         log.atInfo().log("Creating GPIO Controller.");
         initializePins();
     }
@@ -32,13 +32,13 @@ public class GPIOServiceMock implements com.github.fwidder.smartgarden.service.i
     @Override
     public void initializePins() {
         log.atInfo().log("Start PIN Init.");
-        for (GPIOInputPin pin : GPIOInputPin.values()) {
-            log.atInfo().log("Init Input Pin \t{}.", pin.toString());
-            inputMap.put(pin, false);
-        }
-        for (GPIOOutputPin pin : GPIOOutputPin.values()) {
+        for (GPIOPumpOutputPin pin : GPIOPumpOutputPin.values()) {
             log.atInfo().log("Init Output Pin \t{}.", pin.toString());
-            outputMap.put(pin, pin.getState().isHigh());
+            pumpMap.put(pin, pin.getState().isHigh());
+        }
+        for (GPIOLedOutputPin pin : GPIOLedOutputPin.values()) {
+            log.atInfo().log("Init Output Pin \t{}.", pin.toString());
+            ledMap.put(pin, pin.getState().isHigh());
         }
 
     }
@@ -50,21 +50,42 @@ public class GPIOServiceMock implements com.github.fwidder.smartgarden.service.i
     }
 
     @Override
-    public void enable(GPIOOutputPin outputPin) {
+    public void enable(GPIOPumpOutputPin outputPin) {
         log.atDebug().log("Enable Pin {}.", outputPin.toString());
-        outputMap.remove(outputPin);
-        outputMap.put(outputPin, true);
+        pumpMap.remove(outputPin);
+        pumpMap.put(outputPin, true);
     }
 
     @Override
-    public void disable(GPIOOutputPin outputPin) {
+    public void disable(GPIOPumpOutputPin outputPin) {
         log.atDebug().log("Disable Pin {}.", outputPin.toString());
-        outputMap.remove(outputPin);
-        outputMap.put(outputPin, false);
+        pumpMap.remove(outputPin);
+        pumpMap.put(outputPin, false);
     }
 
     @Override
-    public boolean getStatus(GPIOOutputPin outputPin) {
-        return outputMap.get(outputPin);
+    public boolean getStatus(GPIOPumpOutputPin outputPin) {
+        return pumpMap.get(outputPin);
+    }
+
+    @Override
+    public void enable(GPIOLedOutputPin outputPin) {
+        log.atDebug().log("Enable Pin {}.", outputPin.toString());
+        ledMap.remove(outputPin);
+        ledMap.put(outputPin, true);
+
+    }
+
+    @Override
+    public void disable(GPIOLedOutputPin outputPin) {
+        log.atDebug().log("Disable Pin {}.", outputPin.toString());
+        ledMap.remove(outputPin);
+        ledMap.put(outputPin, false);
+
+    }
+
+    @Override
+    public boolean getStatus(GPIOLedOutputPin outputPin) {
+        return ledMap.get(outputPin);
     }
 }

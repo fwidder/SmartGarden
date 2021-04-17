@@ -1,5 +1,6 @@
 package com.github.fwidder.smartgarden.service.impl;
 
+import com.github.fwidder.smartgarden.config.SensorPumpMapping;
 import com.github.fwidder.smartgarden.service.interfaces.LEDServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.SensorServiceInterface;
@@ -7,6 +8,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 @Log4j2
@@ -25,25 +28,16 @@ public class TimerServiceImpl implements com.github.fwidder.smartgarden.service.
 
     @Override
     @Scheduled(cron = "${watering.cron}")
-    public void checkWatering() throws InterruptedException {
+    public void checkWatering() throws InterruptedException, IOException {
         log.atInfo().log("Check Watering for all Plants.");
         ledService.setYellow(true);
-        if (sensorService.checkSensor1()) {
-            log.atInfo().log("Pump 1 will be started.");
-            pumpService.setPump1(true);
-        }
-        if (sensorService.checkSensor2()) {
-            log.atInfo().log("Pump 2 will be started.");
-            pumpService.setPump2(true);
-        }
-        if (sensorService.checkSensor3()) {
-            log.atInfo().log("Pump 3 will be started.");
-            pumpService.setPump3(true);
-        }
-        if (sensorService.checkSensor4()) {
-            log.atInfo().log("Pump 4 will be started.");
-            pumpService.setPump4(true);
-        }
+        sensorService.refreshSensor();
+        sensorService.getSensorDataMap().forEach((inputPin, sensorData) -> {
+            if(sensorData.getCurrentAbsolute() > sensorData.getToLow()) {
+                log.atInfo().log("Pump {} will be started.", SensorPumpMapping.map.get(inputPin).getName());
+                pumpService.setPump(SensorPumpMapping.map.get(inputPin), true);
+            }
+        });
         log.atInfo().log("Watering Plants for {}ms.", wateringTime);
         Thread.sleep(wateringTime);
         pumpService.setAll(false);

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+
 @Controller
 @RequestMapping("/")
 public class UIController {
@@ -24,7 +26,7 @@ public class UIController {
     }
 
     @RequestMapping(value = "/control/refresh")
-    public RedirectView refreshControl(){
+    public RedirectView refreshControl() throws IOException {
         uiService.refreshSensor();
         return new RedirectView("/control");
     }

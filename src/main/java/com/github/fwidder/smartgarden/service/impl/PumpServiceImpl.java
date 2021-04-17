@@ -1,25 +1,25 @@
 package com.github.fwidder.smartgarden.service.impl;
 
-import com.github.fwidder.smartgarden.config.GPIOOutputPin;
+import com.github.fwidder.smartgarden.config.GPIOPumpOutputPin;
+import com.github.fwidder.smartgarden.model.ui.PumpData;
 import com.github.fwidder.smartgarden.service.interfaces.GPIOServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.LEDServiceInterface;
+import com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
-@Getter
-public class PumpServiceImpl implements com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface {
+public class PumpServiceImpl implements PumpServiceInterface {
     @Getter(AccessLevel.NONE)
     private final GPIOServiceInterface gpioService;
     @Getter(AccessLevel.NONE)
     private final LEDServiceInterface ledService;
-    private LocalDateTime pump1LastChange;
-    private LocalDateTime pump2LastChange;
-    private LocalDateTime pump3LastChange;
-    private LocalDateTime pump4LastChange;
 
     public PumpServiceImpl(GPIOServiceInterface gpioService, LEDServiceInterface ledService) throws InterruptedException {
         this.gpioService = gpioService;
@@ -30,67 +30,32 @@ public class PumpServiceImpl implements com.github.fwidder.smartgarden.service.i
         ledService.setYellow(false);
     }
 
+
     @Override
-    public boolean getPump1Status(){
-        return !gpioService.getStatus(GPIOOutputPin.PUMP_1);
+    public Map<GPIOPumpOutputPin, PumpData> getPumpStatus(){
+        Map<GPIOPumpOutputPin, PumpData> pumpDataMap = new HashMap<>();
+        Arrays.stream(GPIOPumpOutputPin.values()).forEach(pin -> {
+            pumpDataMap.put(pin, PumpData.builder()//
+                   .name(pin.getName())//
+                   .lastChange(LocalDateTime.now()) // TODO
+                   .status(!gpioService.getStatus(pin)) //
+                .build());
+        });
+        return pumpDataMap;
     }
 
     @Override
-    public boolean getPump2Status(){
-        return !gpioService.getStatus(GPIOOutputPin.PUMP_2);
-    }
-
-    @Override
-    public boolean getPump3Status(){
-        return !gpioService.getStatus(GPIOOutputPin.PUMP_3);
-    }
-
-    @Override
-    public boolean getPump4Status(){
-        return !gpioService.getStatus(GPIOOutputPin.PUMP_4);
-    }
-
-    @Override
-    public void setPump1(boolean state) {
+    public void setPump(GPIOPumpOutputPin pin, boolean state) {
         if (state)
-            gpioService.disable(GPIOOutputPin.PUMP_1);
+            gpioService.disable(pin);
         else
-            gpioService.enable(GPIOOutputPin.PUMP_1);
-        pump1LastChange = LocalDateTime.now();
-    }
-
-    @Override
-    public void setPump2(boolean state) {
-        if (state)
-            gpioService.disable(GPIOOutputPin.PUMP_2);
-        else
-            gpioService.enable(GPIOOutputPin.PUMP_2);
-        pump2LastChange = LocalDateTime.now();
-    }
-
-    @Override
-    public void setPump3(boolean state) {
-        if (state)
-            gpioService.disable(GPIOOutputPin.PUMP_3);
-        else
-            gpioService.enable(GPIOOutputPin.PUMP_3);
-        pump3LastChange = LocalDateTime.now();
-    }
-
-    @Override
-    public void setPump4(boolean state) {
-        if (state)
-            gpioService.disable(GPIOOutputPin.PUMP_4);
-        else
-            gpioService.enable(GPIOOutputPin.PUMP_4);
-        pump4LastChange = LocalDateTime.now();
+            gpioService.enable(pin);
     }
 
     @Override
     public void setAll(boolean state) {
-        setPump1(state);
-        setPump2(state);
-        setPump3(state);
-        setPump4(state);
+        Arrays.stream(GPIOPumpOutputPin.values()).forEach(pin -> {
+            setPump(pin, state);
+        });
     }
 }

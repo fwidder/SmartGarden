@@ -1,5 +1,6 @@
 package com.github.fwidder.smartgarden.service.impl;
 
+import com.github.fwidder.smartgarden.config.ArduinoWaterSensorInputPin;
 import lombok.extern.log4j.Log4j2;
 import org.firmata4j.IODevice;
 import org.firmata4j.Pin;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
 import java.io.IOException;
+import java.util.Arrays;
 
 @Service
 @Log4j2
@@ -19,16 +21,8 @@ import java.io.IOException;
         matchIfMissing = true)
 public class ArduinoADCServiceImpl implements com.github.fwidder.smartgarden.service.interfaces.ArduinoADCServiceInterface {
     private final IODevice arduino;
-    private final int sensor1Port;
-    private final int sensor2Port;
-    private final int sensor3Port;
-    private final int sensor4Port;
 
-    public ArduinoADCServiceImpl(@Value("${arduino.port}") String arduinoPort, @Value("${watering.sensor.sensor1.port}") int sensor1Port, @Value("${watering.sensor.sensor2.port}") int sensor2Port, @Value("${watering.sensor.sensor3.port}") int sensor3Port, @Value("${watering.sensor.sensor4.port}") int sensor4Port) throws IOException, InterruptedException {
-        this.sensor1Port = sensor1Port;
-        this.sensor2Port = sensor2Port;
-        this.sensor3Port = sensor3Port;
-        this.sensor4Port = sensor4Port;
+    public ArduinoADCServiceImpl(@Value("${arduino.port}") String arduinoPort) throws IOException, InterruptedException {
         log.atInfo().log("Creating Arduino at Port {}.", arduinoPort);
         this.arduino = new FirmataDevice(arduinoPort);
         log.atInfo().log("Starting and Initializing Arduino.");
@@ -47,42 +41,20 @@ public class ArduinoADCServiceImpl implements com.github.fwidder.smartgarden.ser
 
     @Override
     public void readSensorTest() throws IOException {
-        log.atInfo().log("Pin {} has Value {}.", sensor1Port, readSensor1());
-        log.atInfo().log("Pin {} has Value {}.", sensor2Port, readSensor2());
-        log.atInfo().log("Pin {} has Value {}.", sensor3Port, readSensor3());
-        log.atInfo().log("Pin {} has Value {}.", sensor4Port, readSensor4());
+        Arrays.stream(ArduinoWaterSensorInputPin.values()).forEach(inputPin -> {
+            try {
+                log.atInfo().log("Pin {} has Value {}.", inputPin.getName(), readSensor(inputPin));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
-    public long readSensor1() throws IOException {
-        arduino.getPin(sensor1Port).setMode(Pin.Mode.ANALOG);
-        long val = arduino.getPin(sensor1Port).getValue();
-        log.atDebug().log("Pin {} has Value {}.", sensor1Port, val);
+    public long readSensor(ArduinoWaterSensorInputPin inputPin) throws IOException {
+        arduino.getPin(inputPin.getPort()).setMode(Pin.Mode.ANALOG);
+        long val = arduino.getPin(inputPin.getPort()).getValue();
+        log.atDebug().log("Port {} has Value {}.", inputPin.getName(), val);
         return  val;
     }
-
-    @Override
-    public long readSensor2() throws IOException {
-        arduino.getPin(sensor2Port).setMode(Pin.Mode.ANALOG);
-        long val = arduino.getPin(sensor2Port).getValue();
-        log.atDebug().log("Pin {} has Value {}.", sensor2Port, val);
-        return  val;
-    }
-
-    @Override
-    public long readSensor3() throws IOException {
-        arduino.getPin(sensor3Port).setMode(Pin.Mode.ANALOG);
-        long val = arduino.getPin(sensor3Port).getValue();
-        log.atDebug().log("Pin {} has Value {}.", sensor3Port, val);
-        return  val;
-    }
-
-    @Override
-    public long readSensor4() throws IOException {
-        arduino.getPin(sensor4Port).setMode(Pin.Mode.ANALOG);
-        long val = arduino.getPin(sensor4Port).getValue();
-        log.atDebug().log("Pin {} has Value {}.", sensor4Port, val);
-        return  val;
-    }
-
 }

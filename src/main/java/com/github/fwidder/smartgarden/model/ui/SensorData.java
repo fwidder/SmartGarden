@@ -7,13 +7,14 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 public class SensorData {
     private final String name;
     private final LocalDateTime lastMeasurement;
     private final double currentPercent;
-    private final double currentAbsolute;
+    private final long currentAbsolute;
     private final long min;
     private final long max;
+    private final long toLow;
 }

@@ -1,6 +1,7 @@
 package com.github.fwidder.smartgarden.service.impl;
 
-import com.github.fwidder.smartgarden.config.GPIOOutputPin;
+import com.github.fwidder.smartgarden.config.GPIOLedOutputPin;
+import com.github.fwidder.smartgarden.config.GPIOPumpOutputPin;
 import com.github.fwidder.smartgarden.service.interfaces.GPIOServiceInterface;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +24,24 @@ public class LEDServiceImpl implements com.github.fwidder.smartgarden.service.in
     @Override
     public void setGreen(boolean state) {
         if (state)
-            gpioService.enable(GPIOOutputPin.LED_GREEN);
+            gpioService.enable(GPIOLedOutputPin.LED_GREEN);
         else
-            gpioService.disable(GPIOOutputPin.LED_GREEN);
+            gpioService.disable(GPIOLedOutputPin.LED_GREEN);
     }
 
     @Override
     public void setYellow(boolean state) {
         if (state)
-            gpioService.enable(GPIOOutputPin.LED_YELLOW);
+            gpioService.enable(GPIOLedOutputPin.LED_YELLOW);
         else
-            gpioService.disable(GPIOOutputPin.LED_YELLOW);
+            gpioService.disable(GPIOLedOutputPin.LED_YELLOW);
     }
 
     @Override
     public void setRed(boolean state) {
         if (state)
-            gpioService.enable(GPIOOutputPin.LED_RED);
+            gpioService.enable(GPIOLedOutputPin.LED_RED);
         else
-            gpioService.disable(GPIOOutputPin.LED_RED);
+            gpioService.disable(GPIOLedOutputPin.LED_RED);
     }
 }

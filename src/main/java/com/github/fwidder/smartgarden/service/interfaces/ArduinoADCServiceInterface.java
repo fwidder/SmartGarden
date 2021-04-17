@@ -1,5 +1,7 @@
 package com.github.fwidder.smartgarden.service.interfaces;
 
+import com.github.fwidder.smartgarden.config.ArduinoWaterSensorInputPin;
+
 import javax.annotation.PreDestroy;
 import java.io.IOException;
 
@@ -9,11 +11,5 @@ public interface ArduinoADCServiceInterface {
 
     void readSensorTest() throws IOException;
 
-    long readSensor1() throws IOException;
-
-    long readSensor2() throws IOException;
-
-    long readSensor3() throws IOException;
-
-    long readSensor4() throws IOException;
+    long readSensor(ArduinoWaterSensorInputPin inputPin) throws IOException;
 }
