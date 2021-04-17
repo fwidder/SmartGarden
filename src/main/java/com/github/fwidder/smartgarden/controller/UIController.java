@@ -1,6 +1,7 @@
 package com.github.fwidder.smartgarden.controller;
 
-import com.github.fwidder.smartgarden.service.UIService;
+import com.github.fwidder.smartgarden.service.impl.UIServiceImpl;
+import com.github.fwidder.smartgarden.service.interfaces.UIServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,9 +10,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/")
 public class UIController {
-    private final UIService uiService;
+    private final UIServiceInterface uiService;
 
-    public UIController(UIService uiService) {
+    public UIController(UIServiceInterface uiService) {
         this.uiService = uiService;
     }
 

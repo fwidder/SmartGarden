@@ -33,7 +33,8 @@
     {
       "name": "watering.sensor.sensor1.high",
       "type": "java.lang.Integer",
-      "description": "Maximum value for Sensor 1 with watering allowed."
+      "description": "Maximum value for Sensor 1 with watering allowed.",
+      "defaultValue": "500"
     },
     {
       "name": "watering.sensor.sensor2.port",
@@ -50,7 +51,8 @@
     {
       "name": "watering.sensor.sensor2.high",
       "type": "java.lang.Integer",
-      "description": "Maximum value for Sensor 2 with watering allowed."
+      "description": "Maximum value for Sensor 2 with watering allowed.",
+      "defaultValue": "500"
     },
     {
       "name": "watering.sensor.sensor3.port",
@@ -67,7 +69,8 @@
     {
       "name": "watering.sensor.sensor3.high",
       "type": "java.lang.Integer",
-      "description": "Maximum value for Sensor 3 with watering allowed."
+      "description": "Maximum value for Sensor 3 with watering allowed.",
+      "defaultValue": "500"
     },
     {
       "name": "watering.sensor.sensor4.port",
@@ -84,7 +87,14 @@
     {
       "name": "watering.sensor.sensor4.high",
       "type": "java.lang.Integer",
-      "description": "Maximum value for Sensor 4 with watering allowed."
+      "description": "Maximum value for Sensor 4 with watering allowed.",
+      "defaultValue": "500"
+    },
+    {
+      "name": "application.mock",
+      "type": "java.lang.Boolean",
+      "description": "If GPIO and Arduino will be mocked.",
+      "defaultValue": "false"
     }
   ]
 }

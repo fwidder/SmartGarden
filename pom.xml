@@ -18,7 +18,7 @@
         <pi4j.version>1.3</pi4j.version>
         <start-class>com.github.fwidder.smartgarden.SmartgardenApplication</start-class>
         <pi.host>xxxxxxxx</pi.host>
-        <pi.port>22</pi.port>
+        <pi.port>xxxxxxxx</pi.port>
         <pi.user>xxxxxxxx</pi.user>
         <pi.password>xxxxxxxx</pi.password>
         <pi.deployDirectory>/opt/smartgarden</pi.deployDirectory>

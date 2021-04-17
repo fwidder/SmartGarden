@@ -1,5 +1,8 @@
-package com.github.fwidder.smartgarden.service;
+package com.github.fwidder.smartgarden.service.impl;
 
+import com.github.fwidder.smartgarden.service.interfaces.LEDServiceInterface;
+import com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface;
+import com.github.fwidder.smartgarden.service.interfaces.SensorServiceInterface;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -7,19 +10,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Log4j2
-public class TimerService {
-    private final LEDService ledService;
-    private final SensorService sensorService;
-    private final PumpService pumpService;
+public class TimerServiceImpl implements com.github.fwidder.smartgarden.service.interfaces.TimerServiceInterface {
+    private final LEDServiceInterface ledService;
+    private final SensorServiceInterface sensorService;
+    private final PumpServiceInterface pumpService;
     private final Long wateringTime;
 
-    public TimerService(LEDService ledService, SensorService sensorService, PumpService pumpService, @Value("${watering.period}") String wateringTime) throws NumberFormatException {
+    public TimerServiceImpl(LEDServiceInterface ledService, SensorServiceInterface sensorService, PumpServiceInterface pumpService, @Value("${watering.period}") String wateringTime) throws NumberFormatException {
         this.ledService = ledService;
         this.sensorService = sensorService;
         this.pumpService = pumpService;
         this.wateringTime = Long.parseLong(wateringTime) * 1000L;
     }
 
+    @Override
     @Scheduled(cron = "${watering.cron}")
     public void checkWatering() throws InterruptedException {
         log.atInfo().log("Check Watering for all Plants.");

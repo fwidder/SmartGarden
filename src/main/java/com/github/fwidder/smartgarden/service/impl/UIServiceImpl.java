@@ -1,24 +1,29 @@
-package com.github.fwidder.smartgarden.service;
+package com.github.fwidder.smartgarden.service.impl;
 
 import com.github.fwidder.smartgarden.model.ui.PumpData;
 import com.github.fwidder.smartgarden.model.ui.SensorData;
+import com.github.fwidder.smartgarden.service.impl.TimerServiceImpl;
+import com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface;
+import com.github.fwidder.smartgarden.service.interfaces.SensorServiceInterface;
+import com.github.fwidder.smartgarden.service.interfaces.TimerServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UIService {
-    private final PumpService pumpService;
-    private final SensorService sensorService;
-    private final TimerService timerService;
+public class UIServiceImpl implements com.github.fwidder.smartgarden.service.interfaces.UIServiceInterface {
+    private final PumpServiceInterface pumpService;
+    private final SensorServiceInterface sensorService;
+    private final TimerServiceInterface timerService;
 
-    public UIService(PumpService pumpService, SensorService sensorService, TimerService timerService) {
+    public UIServiceImpl(PumpServiceInterface pumpService, SensorServiceInterface sensorService, TimerServiceInterface timerService) {
         this.pumpService = pumpService;
         this.sensorService = sensorService;
         this.timerService = timerService;
     }
 
+    @Override
     public void refreshSensor(){
         sensorService.checkSensor1();
         sensorService.checkSensor2();
@@ -26,6 +31,7 @@ public class UIService {
         sensorService.checkSensor4();
     }
 
+    @Override
     public List<PumpData> getPumpData() {
         List<PumpData> pumpData = new ArrayList<>();
         pumpData.add(
@@ -59,6 +65,7 @@ public class UIService {
         return pumpData;
     }
 
+    @Override
     public List<SensorData> getSensorData() {
         List<SensorData> sensorData = new ArrayList<>();
         sensorData.add( //
