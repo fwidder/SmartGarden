@@ -15,7 +15,7 @@
     <tr th:each="sensor : ${sensorData}">
         <td th:text="${sensor.getName()}">NAME</td>
         <td th:text="${sensor.getCurrentAbsolute()}">CURRENT</td>
-        <td th:text="${#numbers.formatDecimal(sensor.getCurrentPercent(), 3, 2, 'POINT')+'%'}">CURRENT</td>
+        <td th:text="${#numbers.formatDecimal(sensor.getCurrentPercent() * 100, 3, 2, 'POINT')+'%'}">CURRENT</td>
         <td th:text="${#temporals.format(sensor.getLastMeasurement(), 'dd.MM.yyyy - HH:mm:ss')}">LASTMeasurement</td>
         <td th:text="${sensor.getMin()}">MIN</td>
         <td th:text="${sensor.getMax()}">MAX</td>

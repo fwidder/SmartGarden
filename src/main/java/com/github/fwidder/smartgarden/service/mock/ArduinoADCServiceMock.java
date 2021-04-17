@@ -50,21 +50,21 @@ public class ArduinoADCServiceMock implements com.github.fwidder.smartgarden.ser
 
     @Override
     public long readSensor1() throws IOException {
-        long val = 600;
+        long val = 300;
         log.atDebug().log("Pin {} has Value {}.", sensor1Port, val);
         return  val;
     }
 
     @Override
     public long readSensor2() throws IOException {
-        long val = 600;
+        long val = 400;
         log.atDebug().log("Pin {} has Value {}.", sensor2Port, val);
         return  val;
     }
 
     @Override
     public long readSensor3() throws IOException {
-        long val = 600;
+        long val = 500;
         log.atDebug().log("Pin {} has Value {}.", sensor3Port, val);
         return  val;
     }
