@@ -1,5 +1,5 @@
 application:
-  mock: false
+  mock: true
 arduino:
   port: /dev/ttyACM0
 logging:
@@ -19,17 +19,25 @@ watering:
   sensor:
     sensor1:
       port: 14
-      low: 500
-      high: 700
+      # Wet
+      low: 300
+      # Dry
+      high: 650
     sensor2:
       port: 15
-      low: 500
-      high: 700
+      # Wet
+      low: 300
+      # Dry
+      high: 650
     sensor3:
       port: 16
-      low: 500
-      high: 700
+      # Wet
+      low: 300
+      # Dry
+      high: 650
     sensor4:
       port: 17
-      low: 500
-      high: 700
+      # Wet
+      low: 300
+      # Dry
+      high: 650

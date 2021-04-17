@@ -5,6 +5,7 @@
     <tr>
         <th scope="col">Sensor</th>
         <th scope="col">Aktuell</th>
+        <th scope="col">Aktuell %</th>
         <th scope="col">Letzte Messung</th>
         <th scope="col">Minimum</th>
         <th scope="col">Maximum</th>
@@ -13,8 +14,9 @@
     <tbody>
     <tr th:each="sensor : ${sensorData}">
         <td th:text="${sensor.getName()}">NAME</td>
-        <td th:text="${sensor.getCurrent()}">CURRENT</td>
-        <td th:text="${sensor.getLastMeasurement()}">LASTMeasurement</td>
+        <td th:text="${sensor.getCurrentAbsolute()}">CURRENT</td>
+        <td th:text="${#numbers.formatDecimal(sensor.getCurrentPercent(), 3, 2, 'POINT')+'%'}">CURRENT</td>
+        <td th:text="${#temporals.format(sensor.getLastMeasurement(), 'dd.MM.yyyy - HH:mm:ss')}">LASTMeasurement</td>
         <td th:text="${sensor.getMin()}">MIN</td>
         <td th:text="${sensor.getMax()}">MAX</td>
     </tr>

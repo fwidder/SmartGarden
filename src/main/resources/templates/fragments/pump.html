@@ -11,7 +11,7 @@
     <tr th:each="pump : ${pumpData}">
         <td th:text="${pump.getName()}">NAME</td>
         <td th:text="${pump.isStatus()}">STATUS</td>
-        <td th:text="${pump.getLastChange()}">LASTChanged</td>
+        <td th:text="${#temporals.format(pump.getLastChange(), 'dd.MM.yyyy - HH:mm:ss')}">LASTChanged</td>
     </tr>
     </tbody>
 </table>

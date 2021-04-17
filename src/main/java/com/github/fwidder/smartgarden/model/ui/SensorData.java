@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 public class SensorData {
     private final String name;
     private final LocalDateTime lastMeasurement;
-    private final long current;
+    private final double currentPercent;
+    private final double currentAbsolute;
     private final long min;
     private final long max;
 }

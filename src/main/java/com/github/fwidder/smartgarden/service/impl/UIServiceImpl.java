@@ -65,13 +65,18 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
         return pumpData;
     }
 
+    private double calcSensorPercent(long min, long max, long current){
+        return ((double) current - (double) max) / ((double) min - (double) max);
+    }
+
     @Override
     public List<SensorData> getSensorData() {
         List<SensorData> sensorData = new ArrayList<>();
         sensorData.add( //
                 SensorData.builder() //
                         .name("Sensor #1") //
-                        .current(sensorService.getSensor1Last()) //
+                        .currentAbsolute(sensorService.getSensor1Last()) //
+                        .currentPercent(calcSensorPercent(sensorService.getSensor1Min(), sensorService.getSensor1Max() ,sensorService.getSensor1Last())) //
                         .lastMeasurement(sensorService.getSensor1LastMeasurement()) //
                         .max(sensorService.getSensor1Max()) //
                         .min(sensorService.getSensor1Min()) //
@@ -80,7 +85,8 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
         sensorData.add( //
                 SensorData.builder() //
                         .name("Sensor #2")
-                        .current(sensorService.getSensor2Last()) //
+                        .currentAbsolute(sensorService.getSensor2Last()) //
+                        .currentPercent(calcSensorPercent(sensorService.getSensor2Min(), sensorService.getSensor2Max() ,sensorService.getSensor2Last())) //
                         .lastMeasurement(sensorService.getSensor2LastMeasurement()) //
                         .max(sensorService.getSensor2Max()) //
                         .min(sensorService.getSensor2Min()) //
@@ -89,7 +95,8 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
         sensorData.add( //
                 SensorData.builder() //
                         .name("Sensor #3") //
-                        .current(sensorService.getSensor3Last()) //
+                        .currentAbsolute(sensorService.getSensor3Last()) //
+                        .currentPercent(calcSensorPercent(sensorService.getSensor3Min(), sensorService.getSensor3Max() ,sensorService.getSensor3Last())) //
                         .lastMeasurement(sensorService.getSensor3LastMeasurement()) //
                         .max(sensorService.getSensor3Max()) //
                         .min(sensorService.getSensor3Min()) //
@@ -98,7 +105,8 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
         sensorData.add( //
                 SensorData.builder() //
                         .name("Sensor #4") //
-                        .current(sensorService.getSensor4Last()) //
+                        .currentAbsolute(sensorService.getSensor4Last()) //
+                        .currentPercent(calcSensorPercent(sensorService.getSensor4Min(), sensorService.getSensor4Max() ,sensorService.getSensor4Last())) //
                         .lastMeasurement(sensorService.getSensor4LastMeasurement()) //
                         .max(sensorService.getSensor4Max()) //
                         .min(sensorService.getSensor4Min()) //
