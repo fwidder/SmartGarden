@@ -32,7 +32,7 @@ public class IntegrationTests {
     @Test
     @DisplayName("Mock Autoconfiguration Test")
     public void autoConfigureMockTest(){
-        assertThat(gpioService instanceof GPIOServiceMock, is(true));
-        assertThat(arduinoADCService instanceof ArduinoADCServiceMock, is(true));
+        assertThat(gpioService instanceof GPIOServiceMock, is(equalTo(true)));
+        assertThat(arduinoADCService instanceof ArduinoADCServiceMock, is(equalTo(true)));
     }
 }

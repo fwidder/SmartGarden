@@ -1,6 +1,5 @@
 package com.github.fwidder.smartgarden.controller;
 
-import com.github.fwidder.smartgarden.service.impl.UIServiceImpl;
 import com.github.fwidder.smartgarden.service.interfaces.UIServiceInterface;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
