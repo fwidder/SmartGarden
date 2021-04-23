@@ -1,0 +1,44 @@
+HELP.md
+../smartgardenbackend/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+/smartgarden.log
+*log*.gz
+/src/main/resources/static/static/
+/src/main/resources/static/asset-manifest.json
+/src/main/resources/static/favicon.ico
+/src/main/resources/static/index.html
+/src/main/resources/static/manifest.json
+/src/main/resources/static/robots.txt
+/src/main/resources/static/static/css/
+/src/main/resources/static/static/js/
+/target/

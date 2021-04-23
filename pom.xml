@@ -1,161 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.fwidder.smartgarden</groupId>
+    <artifactId>smartgarden-full</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>smartgarden</name>
+    <packaging>pom</packaging>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.fwidder</groupId>
-    <artifactId>smartgarden</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>smartgarden</name>
-    <description>Smart Garden Watering</description>
-    <properties>
-        <java.version>11</java.version>
-        <pi4j.version>1.3</pi4j.version>
-        <thymeleaf.version>3.0.12.RELEASE</thymeleaf.version>
-        <firmata4j.version>2.3.8</firmata4j.version>
-        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
-        <ant-jsch.version>1.9.6</ant-jsch.version>
-        <start-class>com.github.fwidder.smartgarden.SmartgardenApplication</start-class>
-        <pi.host>xxxxxxxx</pi.host>
-        <pi.port>xxxxxxxx</pi.port>
-        <pi.user>xxxxxxxx</pi.user>
-        <pi.password>xxxxxxxx</pi.password>
-        <pi.deployDirectory>/opt/smartgarden</pi.deployDirectory>
-    </properties>
-    <dependencies>
-        <!-- Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
 
-        <!-- Monitoring -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <!-- DEV -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- PI GPIO -->
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-core</artifactId>
-            <version>${pi4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-gpio-extension</artifactId>
-            <version>${pi4j.version}</version>
-        </dependency>
-
-        <!-- ADC with Arduino -->
-        <dependency>
-            <groupId>com.github.kurbatov</groupId>
-            <artifactId>firmata4j</artifactId>
-            <version>${firmata4j.version}</version>
-        </dependency>
-
-        <!-- UI -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
-        <!-- Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>spring-boot</classifier>
-                            <mainClass>${start-class}</mainClass>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Deploy -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>${maven-antrun-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <scp
-                                        file="${project.build.directory}/${project.build.finalName}-spring-boot.jar"
-                                        todir="${pi.user}:${pi.password}@${pi.host}:${pi.deployDirectory}"
-                                        port="${pi.port}" trust="true" verbose="true" failonerror="true">
-                                </scp>
-                                <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
-                                         password="${pi.password}" trust="true" failonerror="false"
-                                         verbose="true"
-                                         command="/opt/smartgarden/restartSmartGarden.sh ;"/>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.ant</groupId>
-                        <artifactId>ant-jsch</artifactId>
-                        <version>${ant-jsch.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
-
+    <modules>
+        <module>smartgarden-react</module>
+        <module>smartgarden-backend</module>
+    </modules>
 </project>

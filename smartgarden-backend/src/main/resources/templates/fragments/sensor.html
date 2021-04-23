@@ -1,0 +1,24 @@
+<div>
+    <h2>Sensoren</h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Sensor</th>
+            <th scope="col">Aktuell (Absolut)</th>
+            <th scope="col">Aktuell %</th>
+            <th scope="col">Letzte Messung</th>
+            <th scope="col">Startet bei %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sensor : ${sensorData}">
+            <td th:text="${sensor.getName()}">NAME</td>
+            <td th:text="${sensor.getCurrentAbsolute()}">CURRENT</td>
+            <td th:text="${#numbers.formatDecimal(sensor.getCurrentPercent() * 100, 3, 2, 'POINT')+'%'}">CURRENT</td>
+            <td th:text="${#temporals.format(sensor.getLastMeasurement(), 'dd.MM.yyyy - HH:mm:ss')}">LASTMeasurement
+            </td>
+            <td th:text="${#numbers.formatDecimal(sensor.getToLow(), 3, 2, 'POINT')+'%'}">MIN</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
