@@ -1,6 +1,6 @@
 ---
 application:
-  mock: true
+  mock: false
 
 arduino:
   port: /dev/ttyACM0

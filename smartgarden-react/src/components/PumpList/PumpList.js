@@ -22,7 +22,7 @@ export class PumpList extends Component {
     }
 
     refresh() {
-        fetch('http://localhost:8081/control/pumpdata')
+        fetch('/control/pumpdata')
             .then(res => res.json())
             .then((data) => {
                 this.setState({pumpdata: data})
@@ -34,7 +34,7 @@ export class PumpList extends Component {
         const requestOptions = {
             method: 'POST'
         };
-        fetch(`http://localhost:8081/control/start/${pump}`, requestOptions)
+        fetch(`/control/start/${pump}`, requestOptions)
             .catch(console.log)
         await this.timeout(1000);
         this.refresh()
@@ -44,7 +44,7 @@ export class PumpList extends Component {
         const requestOptions = {
             method: 'POST'
         };
-        fetch(`http://localhost:8081/control/stop/${pump}`, requestOptions)
+        fetch(`/control/stop/${pump}`, requestOptions)
             .catch(console.log)
         await this.timeout(1000);
         this.refresh()
@@ -54,7 +54,7 @@ export class PumpList extends Component {
         const requestOptions = {
             method: 'POST'
         };
-        fetch(`http://localhost:8081/control/activate/${pump}`, requestOptions)
+        fetch(`/control/activate/${pump}`, requestOptions)
             .catch(console.log)
         await this.timeout(1000);
         this.refresh()
@@ -64,7 +64,7 @@ export class PumpList extends Component {
         const requestOptions = {
             method: 'POST'
         };
-        fetch(`http://localhost:8081/control/deactivate/${pump}`, requestOptions)
+        fetch(`/control/deactivate/${pump}`, requestOptions)
             .catch(console.log)
         await this.timeout(1000);
         this.refresh()
