@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(value = "/control/")
 public class ApiController {
     private final UIServiceInterface uiService;
@@ -29,13 +28,24 @@ public class ApiController {
     @PostMapping(value = "start/{pump}")
     public void controlStart(@PathVariable String pump) {
         uiService.startPump(GPIOPumpOutputPin.valueOf(pump));
-
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "stop/{pump}")
     public void controlStop(@PathVariable String pump) {
         uiService.stopPump(GPIOPumpOutputPin.valueOf(pump));
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value = "activate/{pump}")
+    public void controlActivate(@PathVariable String pump) {
+        uiService.activatePump(GPIOPumpOutputPin.valueOf(pump));
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value = "deactivate/{pump}")
+    public void controlDeactivate(@PathVariable String pump) {
+        uiService.deactivatePump(GPIOPumpOutputPin.valueOf(pump));
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

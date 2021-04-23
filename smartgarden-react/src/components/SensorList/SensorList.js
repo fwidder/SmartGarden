@@ -31,7 +31,7 @@ export class SensorList extends Component {
         return (
             <div>
                 <h2>Sensoren</h2>
-                <Sensor sensors={this.state.sensordata}></Sensor>
+                <Sensor sensors={this.state.sensordata}/>
                 <Button variant="primary" block onClick={this.refresh}>
                     Refresh
                 </Button>

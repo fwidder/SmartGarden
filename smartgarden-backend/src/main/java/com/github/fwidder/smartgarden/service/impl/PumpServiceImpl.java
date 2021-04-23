@@ -2,6 +2,7 @@ package com.github.fwidder.smartgarden.service.impl;
 
 import com.github.fwidder.smartgarden.config.GPIOPumpOutputPin;
 import com.github.fwidder.smartgarden.model.ui.PumpData;
+import com.github.fwidder.smartgarden.service.interfaces.ConfigServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.GPIOServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.LEDServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface;
@@ -22,10 +23,13 @@ public class PumpServiceImpl implements PumpServiceInterface {
     private final GPIOServiceInterface gpioService;
     @Getter(AccessLevel.NONE)
     private final LEDServiceInterface ledService;
+    @Getter(AccessLevel.NONE)
+    private final ConfigServiceInterface configService;
 
-    public PumpServiceImpl(GPIOServiceInterface gpioService, LEDServiceInterface ledService) throws InterruptedException {
+    public PumpServiceImpl(GPIOServiceInterface gpioService, LEDServiceInterface ledService, ConfigServiceInterface configService) throws InterruptedException {
         this.gpioService = gpioService;
         this.ledService = ledService;
+        this.configService = configService;
         ledService.setYellow(true);
         setAll(false);
         pumpTest();
@@ -36,18 +40,22 @@ public class PumpServiceImpl implements PumpServiceInterface {
     @Override
     public Map<GPIOPumpOutputPin, PumpData> getPumpStatus() {
         Map<GPIOPumpOutputPin, PumpData> pumpDataMap = new HashMap<>();
-        Arrays.stream(GPIOPumpOutputPin.values()).forEach(pin -> {
-            pumpDataMap.put(pin, PumpData.builder()//
-                    .name(pin.getName())//
-                    .lastChange(LocalDateTime.now()) // TODO Remember last actual Change
-                    .status(!gpioService.getStatus(pin)) //
-                    .build());
-        });
+        Arrays.stream(GPIOPumpOutputPin.values()).forEach(pin -> pumpDataMap.put(pin, PumpData.builder()//
+                .name(pin.getName())//
+                .lastChange(LocalDateTime.now()) // TODO Remember last actual Change
+                .status(!gpioService.getStatus(pin)) //
+                .disabled(configService.isDeactivated(pin)) //
+                .build()));
         return pumpDataMap;
     }
 
     @Override
     public void setPump(GPIOPumpOutputPin pin, boolean state) {
+        if(configService.isDeactivated(pin)) {
+            log.atWarn().log("{} is deactivated. Pump will stay turned off", pin.getName());
+            gpioService.enable(pin);
+            return;
+        }
         log.atDebug().log("Set {} to {}.", pin.getName(), state);
         if (state)
             gpioService.disable(pin);
@@ -57,8 +65,6 @@ public class PumpServiceImpl implements PumpServiceInterface {
 
     @Override
     public void setAll(boolean state) {
-        Arrays.stream(GPIOPumpOutputPin.values()).forEach(pin -> {
-            setPump(pin, state);
-        });
+        Arrays.stream(GPIOPumpOutputPin.values()).forEach(pin -> setPump(pin, state));
     }
 }

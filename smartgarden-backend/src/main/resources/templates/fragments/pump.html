@@ -5,6 +5,7 @@
         <th scope="col">Pumpe</th>
         <th scope="col">Status</th>
         <th scope="col">Letzte Änderung</th>
+        <th scope="col">Deaktiviert</th>
     </tr>
     </thead>
     <tbody>
@@ -12,6 +13,7 @@
         <td th:text="${pump.getName()}">NAME</td>
         <td th:text="${pump.isStatus()}">STATUS</td>
         <td th:text="${#temporals.format(pump.getLastChange(), 'dd.MM.yyyy - HH:mm:ss')}">LASTChanged</td>
+        <td th:text="${pump.isDisabled()}">Disabled</td>
     </tr>
     </tbody>
 </table>

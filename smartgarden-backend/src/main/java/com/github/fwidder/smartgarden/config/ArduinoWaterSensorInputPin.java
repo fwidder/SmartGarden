@@ -8,9 +8,9 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public enum ArduinoWaterSensorInputPin {
-    SENSOR_1("Sensor 1", 14, 300, 650, 550),
-    SENSOR_2("Sensor 2", 15, 300, 650, 550),
-    SENSOR_3("Sensor 3", 16, 300, 650, 550);
+    SENSOR_1("SENSOR_1", 14, 300, 650, 550),
+    SENSOR_2("SENSOR_2", 15, 300, 650, 550),
+    SENSOR_3("SENSOR_3", 16, 300, 650, 550);
 
     private final String name;
     private final int port;

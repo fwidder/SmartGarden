@@ -42,3 +42,4 @@ build/
 /src/main/resources/static/static/css/
 /src/main/resources/static/static/js/
 /target/
+/smartgarden-db.mv.db

@@ -17,4 +17,8 @@ public interface UIServiceInterface {
     void startPump(GPIOPumpOutputPin pin);
 
     void stopPump(GPIOPumpOutputPin pin);
+
+    void activatePump(GPIOPumpOutputPin valueOf);
+
+    void deactivatePump(GPIOPumpOutputPin valueOf);
 }

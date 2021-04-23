@@ -1,8 +1,10 @@
 ---
 application:
-  mock: false
+  mock: true
+
 arduino:
   port: /dev/ttyACM0
+
 logging:
   file:
     name: smartgarden.log
@@ -28,9 +30,22 @@ logging:
 server:
   port: 8081
   shutdown: graceful
+
 spring:
   application:
     name: "Smart Garden"
+  datasource:
+    url: jdbc:h2:file:./smartgarden-db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+  h2:
+    console:
+      enabled: true
+
 watering:
   # cron: "30 0/30 * * * *"
   cron: "0 */5 * * * *"

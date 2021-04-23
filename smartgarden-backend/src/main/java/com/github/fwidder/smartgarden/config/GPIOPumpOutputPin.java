@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public enum GPIOPumpOutputPin {
-    PUMP_1("Pump 1", RaspiPin.GPIO_22, PinState.HIGH),
-    PUMP_2("Pump 2", RaspiPin.GPIO_23, PinState.HIGH),
-    PUMP_3("Pump 3", RaspiPin.GPIO_24, PinState.HIGH);
+    PUMP_1("PUMP_1", RaspiPin.GPIO_22, PinState.HIGH),
+    PUMP_2("PUMP_2", RaspiPin.GPIO_23, PinState.HIGH),
+    PUMP_3("PUMP_3", RaspiPin.GPIO_24, PinState.HIGH);
 
     private final String name;
     private final Pin pin;

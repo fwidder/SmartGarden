@@ -1,2 +1,5 @@
 /smartgarden.iml
 /.idea/
+/smartgarden-db.mv.db
+/smartgarden-backend/smartgarden-db.trace.db
+/smartgarden-db.trace.db

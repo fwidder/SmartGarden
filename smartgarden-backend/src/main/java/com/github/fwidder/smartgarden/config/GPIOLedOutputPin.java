@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public enum GPIOLedOutputPin {
-    LED_RED("Led red", RaspiPin.GPIO_29, PinState.LOW),
-    LED_YELLOW("Led yellow", RaspiPin.GPIO_28, PinState.LOW),
-    LED_GREEN("Led green", RaspiPin.GPIO_27, PinState.LOW);
+    LED_RED("LED_RED", RaspiPin.GPIO_29, PinState.LOW),
+    LED_YELLOW("LED_YELLOW", RaspiPin.GPIO_28, PinState.LOW),
+    LED_GREEN("LED_GREEN", RaspiPin.GPIO_27, PinState.LOW);
 
     private final String name;
     private final Pin pin;

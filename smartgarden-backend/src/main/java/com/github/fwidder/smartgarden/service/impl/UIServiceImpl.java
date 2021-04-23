@@ -4,6 +4,7 @@ import com.github.fwidder.smartgarden.config.ArduinoWaterSensorInputPin;
 import com.github.fwidder.smartgarden.config.GPIOPumpOutputPin;
 import com.github.fwidder.smartgarden.model.ui.PumpData;
 import com.github.fwidder.smartgarden.model.ui.SensorData;
+import com.github.fwidder.smartgarden.service.interfaces.ConfigServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.SensorServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.TimerServiceInterface;
@@ -20,11 +21,13 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
     private final PumpServiceInterface pumpService;
     private final SensorServiceInterface sensorService;
     private final TimerServiceInterface timerService;
+    private final ConfigServiceInterface configService;
 
-    public UIServiceImpl(PumpServiceInterface pumpService, SensorServiceInterface sensorService, TimerServiceInterface timerService) {
+    public UIServiceImpl(PumpServiceInterface pumpService, SensorServiceInterface sensorService, TimerServiceInterface timerService, ConfigServiceInterface configService) {
         this.pumpService = pumpService;
         this.sensorService = sensorService;
         this.timerService = timerService;
+        this.configService = configService;
     }
 
     @Override
@@ -36,9 +39,7 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
     public synchronized List<PumpData> getPumpData() {
         List<PumpData> pumpData = new ArrayList<>();
         Map<GPIOPumpOutputPin, PumpData> data = new HashMap<>(pumpService.getPumpStatus());
-        data.forEach((pin, pump) -> {
-            pumpData.add(pump);
-        });
+        data.forEach((pin, pump) -> pumpData.add(pump));
         pumpData.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
         return pumpData;
     }
@@ -51,10 +52,8 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
     public synchronized List<SensorData> getSensorData() {
         List<SensorData> sensorData = new ArrayList<>();
         Map<ArduinoWaterSensorInputPin, SensorData> data = new HashMap<>(sensorService.getSensorDataMap());
-        data.forEach((inputPin, sensor) -> {
-            sensorData.add(sensor.toBuilder().currentPercent(calcSensorPercent(sensor.getMin(), sensor.getMax(), sensor.getCurrentAbsolute()))
-                    .toLow((long) (calcSensorPercent(sensor.getMin(), sensor.getMax(), sensor.getToLow()) * 100L)).build());
-        });
+        data.forEach((inputPin, sensor) -> sensorData.add(sensor.toBuilder().currentPercent(calcSensorPercent(sensor.getMin(), sensor.getMax(), sensor.getCurrentAbsolute()))
+                .toLow((long) (calcSensorPercent(sensor.getMin(), sensor.getMax(), sensor.getToLow()) * 100L)).build()));
         sensorData.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
         return sensorData;
     }
@@ -67,5 +66,15 @@ public class UIServiceImpl implements com.github.fwidder.smartgarden.service.int
     @Override
     public void stopPump(GPIOPumpOutputPin pin) {
         pumpService.setPump(pin, false);
+    }
+
+    @Override
+    public void activatePump(GPIOPumpOutputPin pin) {
+        configService.setDeactivated(pin, false);
+    }
+
+    @Override
+    public void deactivatePump(GPIOPumpOutputPin pin) {
+        configService.setDeactivated(pin, true);
     }
 }

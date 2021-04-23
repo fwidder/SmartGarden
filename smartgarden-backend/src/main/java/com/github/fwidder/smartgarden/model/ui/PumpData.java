@@ -15,4 +15,6 @@ public class PumpData {
     private final String name;
     private final LocalDateTime lastChange;
     private final boolean status;
+    @Builder.Default
+    private final boolean disabled = false;
 }
