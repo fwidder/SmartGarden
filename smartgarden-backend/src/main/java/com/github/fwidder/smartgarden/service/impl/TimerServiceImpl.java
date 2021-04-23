@@ -1,6 +1,8 @@
 package com.github.fwidder.smartgarden.service.impl;
 
+import com.github.fwidder.smartgarden.config.ArduinoWaterSensorInputPin;
 import com.github.fwidder.smartgarden.config.SensorPumpMapping;
+import com.github.fwidder.smartgarden.model.ui.SensorData;
 import com.github.fwidder.smartgarden.service.interfaces.LEDServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.PumpServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.SensorServiceInterface;
@@ -10,6 +12,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Log4j2
@@ -33,7 +37,8 @@ public class TimerServiceImpl implements com.github.fwidder.smartgarden.service.
         log.atInfo().log("Watering Plants for {}ms.", wateringTime);
         ledService.setYellow(true);
         sensorService.refreshSensor();
-        sensorService.getSensorDataMap().forEach((inputPin, sensorData) -> {
+        Map<ArduinoWaterSensorInputPin, SensorData> data = new HashMap<>(sensorService.getSensorDataMap());
+        data.forEach((inputPin, sensorData) -> {
             if (sensorData.getCurrentAbsolute() > sensorData.getToLow()) {
                 log.atInfo().log("Pump {} will be started.", SensorPumpMapping.map.get(inputPin).getName());
                 pumpService.setPump(SensorPumpMapping.map.get(inputPin), true);
