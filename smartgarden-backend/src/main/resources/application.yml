@@ -7,7 +7,7 @@ arduino:
 
 logging:
   file:
-    name: smartgarden.log
+    name: ~/smartgarden.log
   logback:
     rollingpolicy:
       clean-history-on-start: true
@@ -35,7 +35,7 @@ spring:
   application:
     name: "Smart Garden"
   datasource:
-    url: jdbc:h2:file:./smartgarden-db
+    url: jdbc:h2:file:~/smartgarden-db
     driver-class-name: org.h2.Driver
     username: sa
     password: password

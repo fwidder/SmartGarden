@@ -11,8 +11,9 @@ const Pump = ({pumps, start, stop, activate, deactivate}) => {
             <tr>
                 <th className="col-width" scope="col">Pumpe</th>
                 <th className="col-width" scope="col">Status</th>
+                <th className="col-width" scope="col">Deaktiviert</th>
                 <th className="col-width" scope="col">Letzte Änderung</th>
-                <th className="col-width" scope="col"/>
+                <th className="col-width" scope="col">Control</th>
                 <th className="col-width" scope="col"/>
             </tr>
             </thead>

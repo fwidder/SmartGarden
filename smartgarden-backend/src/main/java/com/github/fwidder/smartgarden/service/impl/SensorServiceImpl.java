@@ -1,6 +1,8 @@
 package com.github.fwidder.smartgarden.service.impl;
 
 import com.github.fwidder.smartgarden.config.ArduinoWaterSensorInputPin;
+import com.github.fwidder.smartgarden.dao.WaterSensorEventRepository;
+import com.github.fwidder.smartgarden.model.db.WaterSensorEvent;
 import com.github.fwidder.smartgarden.model.ui.SensorData;
 import com.github.fwidder.smartgarden.service.interfaces.ArduinoADCServiceInterface;
 import com.github.fwidder.smartgarden.service.interfaces.SensorServiceInterface;
@@ -20,10 +22,13 @@ import java.util.Map;
 public class SensorServiceImpl implements SensorServiceInterface {
     @Getter(AccessLevel.NONE)
     private final ArduinoADCServiceInterface arduinoADCService;
+    @Getter(AccessLevel.NONE)
+    private final WaterSensorEventRepository waterSensorEventRepository;
     private Map<ArduinoWaterSensorInputPin, SensorData> sensorDataMap = new HashMap<>();
 
-    public SensorServiceImpl(ArduinoADCServiceInterface arduinoADCService) throws IOException {
+    public SensorServiceImpl(ArduinoADCServiceInterface arduinoADCService, WaterSensorEventRepository waterSensorEventRepository) throws IOException {
         this.arduinoADCService = arduinoADCService;
+        this.waterSensorEventRepository = waterSensorEventRepository;
         testSensor();
     }
 
@@ -37,8 +42,13 @@ public class SensorServiceImpl implements SensorServiceInterface {
     public void refreshSensor() throws IOException {
         for (ArduinoWaterSensorInputPin pin : ArduinoWaterSensorInputPin.values()) {
             sensorDataMap.remove(pin);
-            sensorDataMap.put(pin, getSensorData(pin)
-            );
+            SensorData data;
+            sensorDataMap.put(pin, data = getSensorData(pin));
+            waterSensorEventRepository.save(WaterSensorEvent.builder() //
+                    .sensor(pin) //
+                    .time(LocalDateTime.now()) //
+                    .value(data.getCurrentAbsolute()) //
+                    .build());
         }
     }
     @Override

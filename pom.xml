@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.fwidder.smartgarden</groupId>
     <artifactId>smartgarden-full</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>smartgarden</name>
     <packaging>pom</packaging>
 

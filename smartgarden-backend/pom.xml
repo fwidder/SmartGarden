@@ -7,10 +7,9 @@
     <parent>
         <artifactId>smartgarden-full</artifactId>
         <groupId>com.github.fwidder.smartgarden</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.github.fwidder.smartgarden</groupId>
     <artifactId>smartgarden-backend</artifactId>
     <version>${project.parent.version}</version>
     <name>smartgarden-backend</name>
